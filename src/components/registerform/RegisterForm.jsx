@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./RegisterForm.scss";
 import cloneDeep from "lodash/cloneDeep";
-import Input from "../Input/Input";
+import Input from "../input/Input";
 import axios from "axios";
 import Feedback from "../feedback/Feedback";
 const handleChange = (inputs, setInputs) => {
