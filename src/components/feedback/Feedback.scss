@@ -1,0 +1,15 @@
+.feedback {
+  width: 450px;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+
+  &.fail {
+    background-color: #d6656970;
+    color: red;
+  }
+  &.success {
+    background-color: #60b97e;
+    color: green;
+  }
+}
