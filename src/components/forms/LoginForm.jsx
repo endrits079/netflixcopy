@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./RegisterForm.scss";
+import "./Form.scss";
 import cloneDeep from "lodash/cloneDeep";
 import Input from "../input/Input";
 import axios from "axios";
@@ -18,48 +18,6 @@ const handleChange = (inputs, setInputs) => {
 export default function RegisterForm() {
   const [showFeedback, setShowFeedback] = useState({ show: false, message: "", succeed: false });
   const [inputs, setInputs] = useState({
-    first_name: {
-      type: "input",
-      configs: {
-        type: "text",
-        value: "",
-        name: "first_name",
-        id: "first_name",
-        placeholder: "first name",
-        onChange: () => {
-          handleChange(inputs, setInputs);
-        },
-      },
-      label: "First Name",
-    },
-    last_name: {
-      type: "input",
-      configs: {
-        type: "text",
-        value: "",
-        name: "last_name",
-        id: "last_name",
-        placeholder: "last name",
-        onChange: () => {
-          handleChange(inputs, setInputs);
-        },
-      },
-      label: "Last Name",
-    },
-    username: {
-      type: "input",
-      configs: {
-        type: "text",
-        value: "",
-        name: "username",
-        id: "username",
-        placeholder: "username",
-        onChange: () => {
-          handleChange(inputs, setInputs);
-        },
-      },
-      label: "Username",
-    },
     email: {
       type: "input",
       configs: {
@@ -68,6 +26,7 @@ export default function RegisterForm() {
         name: "email",
         id: "email",
         placeholder: "email",
+        required: true,
         onChange: () => {
           handleChange(inputs, setInputs);
         },
@@ -82,31 +41,19 @@ export default function RegisterForm() {
         name: "password",
         id: "password",
         placeholder: "password",
+        required: true,
         onChange: () => {
           handleChange(inputs, setInputs);
         },
       },
       label: "Password",
     },
-    confirm_password: {
-      type: "input",
-      configs: {
-        type: "password",
-        value: "",
-        name: "confirm_password",
-        id: "password",
-        placeholder: "confirm password",
-        onChange: () => {
-          handleChange(inputs, setInputs);
-        },
-      },
-      label: "Confirm Password",
-    },
+
     submit: {
       type: "input",
       configs: {
         type: "submit",
-        value: "Register",
+        value: "Login",
         id: "submit",
       },
     },
@@ -114,26 +61,14 @@ export default function RegisterForm() {
   const submitHandler = (e) => {
     e.preventDefault();
     let formData = new FormData();
-    formData.append("first_name", inputs.first_name.configs.value);
-    formData.append("last_name", inputs.last_name.configs.value);
-    formData.append("username", inputs.username.configs.value);
     formData.append("email", inputs.email.configs.value);
     formData.append("password", inputs.password.configs.value);
-    formData.append("confirm_password", inputs.confirm_password.configs.value);
-    formData.append("register", true);
-
-    axios.post("http://localhost/netflix/index.php", formData).then((data) => {
-      setShowFeedback({
-        show: true,
-        message: data.data[0],
-        succeed: data.data[1],
-      });
+    formData.append("login", true);
+    axios.post("http://localhost/netflix/index.php", formData).then((response) => {
+        console.log(response);
+      !response.data[1] && setShowFeedback({ show: true, message: response.data[0], succeed: false });
       setTimeout(() => {
-        setShowFeedback({
-          show: false,
-          message: "",
-          succeed: "",
-        });
+setShowFeedback({show:false,message:'',succeed:false})
       }, 5000);
     });
   };
@@ -144,7 +79,7 @@ export default function RegisterForm() {
   return (
     <>
       {showFeedback.show ? <Feedback succeed={showFeedback.succeed}>{showFeedback.message}</Feedback> : null}
-      <form onSubmit={submitHandler} className="register-form" method="POST">
+      <form onSubmit={submitHandler} className="form" method="POST">
         {elements}
       </form>
     </>
