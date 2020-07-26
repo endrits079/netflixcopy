@@ -94,7 +94,7 @@ export default function RegisterForm() {
         type: "password",
         value: "",
         name: "confirm_password",
-        id: "password",
+        id: "confirm_password",
         placeholder: "confirm password",
         onChange: () => {
           handleChange(inputs, setInputs);
@@ -123,6 +123,7 @@ export default function RegisterForm() {
     formData.append("register", true);
 
     axios.post("http://localhost/netflix/index.php", formData).then((data) => {
+      console.log(data.data);
       setShowFeedback({
         show: true,
         message: data.data[0],

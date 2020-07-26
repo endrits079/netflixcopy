@@ -21,17 +21,17 @@ export default function RegisterForm() {
     email: {
       type: "input",
       configs: {
-        type: "email",
+        type: "text",
         value: "",
         name: "email",
         id: "email",
-        placeholder: "email",
+        placeholder: "email or username",
         required: true,
         onChange: () => {
           handleChange(inputs, setInputs);
         },
       },
-      label: "E-mail",
+      label: "E-mail or Username",
     },
     password: {
       type: "input",
