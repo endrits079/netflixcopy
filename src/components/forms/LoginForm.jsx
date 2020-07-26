@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import "./Form.scss";
 import cloneDeep from "lodash/cloneDeep";
 import Input from "../input/Input";
-import axios from "axios";
+import { connect } from "react-redux";
 import Feedback from "../feedback/Feedback";
+import { login } from "../../store/actions/actions";
+import Spinner from "../spinner/Spinner";
 const handleChange = (inputs, setInputs) => {
   let event = window.event;
   const clonedInput = cloneDeep(inputs[event.target.name]);
@@ -15,7 +17,7 @@ const handleChange = (inputs, setInputs) => {
     };
   });
 };
-export default function RegisterForm() {
+function LoginForm(props) {
   const [showFeedback, setShowFeedback] = useState({ show: false, message: "", succeed: false });
   const [inputs, setInputs] = useState({
     email: {
@@ -60,17 +62,18 @@ export default function RegisterForm() {
   });
   const submitHandler = (e) => {
     e.preventDefault();
-    let formData = new FormData();
-    formData.append("email", inputs.email.configs.value);
-    formData.append("password", inputs.password.configs.value);
-    formData.append("login", true);
-    axios.post("http://localhost/netflix/index.php", formData).then((response) => {
-        console.log(response);
-      !response.data[1] && setShowFeedback({ show: true, message: response.data[0], succeed: false });
-      setTimeout(() => {
-setShowFeedback({show:false,message:'',succeed:false})
-      }, 5000);
-    });
+    //     let formData = new FormData();
+    //     formData.append("email", inputs.email.configs.value);
+    //     formData.append("password", inputs.password.configs.value);
+    //     formData.append("login", true);
+    //     axios.post("http://localhost/netflix/index.php", formData).then((response) => {
+    //         console.log(response);
+    //       !response.data[1] && setShowFeedback({ show: true, message: response.data[0], succeed: false });
+    //       setTimeout(() => {
+    // setShowFeedback({show:false,message:'',succeed:false})
+    //       }, 5000);
+    //     });
+    props.login(inputs.email.configs.value, inputs.password.configs.value);
   };
   const elements = [];
   for (let key in inputs) {
@@ -78,10 +81,26 @@ setShowFeedback({show:false,message:'',succeed:false})
   }
   return (
     <>
-      {showFeedback.show ? <Feedback succeed={showFeedback.succeed}>{showFeedback.message}</Feedback> : null}
+      {props.message ? <Feedback succeed={false}>{props.message}</Feedback> : null}
+      {props.showSpinner ? <Spinner></Spinner> : null}
       <form onSubmit={submitHandler} className="form" method="POST">
         {elements}
       </form>
     </>
   );
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (email, password) => dispatch(login(email, password)),
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    showSpinner: state.login.show_spinner,
+    message: state.login.message,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

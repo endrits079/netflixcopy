@@ -4,12 +4,22 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from 'react-router-dom';
-
+import {combineReducers,createStore,applyMiddleware} from 'redux';
+import loginReducer from './store/reducers/login';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import Thunk from 'redux-thunk';
+import {Provider} from 'react-redux';
+const rootReducer = combineReducers({
+  login:loginReducer
+})
+const store = createStore(rootReducer,composeWithDevTools(applyMiddleware(Thunk)));
 ReactDOM.render(
   <React.StrictMode>
+    <Provider store={store}>
     <BrowserRouter>
     <App />
     </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
