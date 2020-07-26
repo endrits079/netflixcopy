@@ -18,7 +18,6 @@ const handleChange = (inputs, setInputs) => {
   });
 };
 function LoginForm(props) {
-  const [showFeedback, setShowFeedback] = useState({ show: false, message: "", succeed: false });
   const [inputs, setInputs] = useState({
     email: {
       type: "input",
@@ -62,17 +61,6 @@ function LoginForm(props) {
   });
   const submitHandler = (e) => {
     e.preventDefault();
-    //     let formData = new FormData();
-    //     formData.append("email", inputs.email.configs.value);
-    //     formData.append("password", inputs.password.configs.value);
-    //     formData.append("login", true);
-    //     axios.post("http://localhost/netflix/index.php", formData).then((response) => {
-    //         console.log(response);
-    //       !response.data[1] && setShowFeedback({ show: true, message: response.data[0], succeed: false });
-    //       setTimeout(() => {
-    // setShowFeedback({show:false,message:'',succeed:false})
-    //       }, 5000);
-    //     });
     props.login(inputs.email.configs.value, inputs.password.configs.value);
   };
   const elements = [];
