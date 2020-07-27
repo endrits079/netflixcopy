@@ -1,0 +1,17 @@
+.single-category-container {
+  width: 100%;
+
+  h2 {
+    color: white;
+    margin: 15px 0;
+    margin-left: 15px;
+  }
+  .movies {
+    display: flex;
+    justify-content: flex-start;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    // flex-basis: 1;
+    // justify-content: space-evenly;
+  }
+}
