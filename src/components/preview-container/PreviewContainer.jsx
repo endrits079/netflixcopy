@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./PreviewContainer.scss";
 import axios from "axios";
-export default function PreviewContainer() {
+export default function PreviewContainer(props) {
   const [files, setImage] = useState({ image: "", video: "", name: "", render: false, hideImage: true });
   const [muted, setMuted] = useState(true);
   useEffect(() => {
-    let formData = new FormData();
-    formData.append("getPreview", true);
-    axios.post("http://localhost/netflix/index.php", formData).then((response) => {
+  
+    axios.post("http://localhost/netflix/index.php", props.formData).then((response) => {
       setImage({
         hideImage:true,
         image: response.data.image.split("/")[2],

@@ -1,17 +1,39 @@
 .single-category-container {
   width: 100%;
-
+  
+  a {
+    text-decoration: none;
+  }
   h2 {
     color: white;
     margin: 15px 0;
-    margin-left: 15px;
+    // margin-left: 15px;
   }
   .movies {
     display: flex;
     justify-content: flex-start;
-    flex-grow: 1;
-    flex-wrap: wrap;
-    // flex-basis: 1;
-    // justify-content: space-evenly;
+    // flex-wrap: no-wrap;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    &:hover {
+      overflow-x: auto;
+    }
+    a {
+      display: inline-block;
+      width: 200px;
+      height: 200px;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    // width: 2px;
+    background-color: #c3c3c377;
+    height: 10px;
+    position: absolute;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgb(31, 29, 29);
+    border-radius: 40px;
+    width: 35px;
   }
 }
