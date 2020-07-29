@@ -1,6 +1,6 @@
 import React from 'react'
 import './Movie.scss';
-
+import SeasonContainer from '../../components/season-container/SeasonContainer';
 import PreviewContainer from '../../components/preview-container/PreviewContainer';
 export default function Movie(props) {
     let formData = new FormData();
@@ -8,7 +8,8 @@ export default function Movie(props) {
     formData.append("id", props.match.params.id);
     return (
         <div className='movie'>
-            <PreviewContainer formData={formData}></PreviewContainer>
+            <PreviewContainer insideMovie formData={formData}></PreviewContainer>
+            <SeasonContainer></SeasonContainer>
         </div>
     )
 }

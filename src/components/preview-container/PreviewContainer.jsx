@@ -7,14 +7,17 @@ function PreviewContainer(props) {
   const [muted, setMuted] = useState(true);
   useEffect(() => {
     axios.post("http://localhost/netflix/index.php", props.formData).then((response) => {
-      console.log(response.data);
       if (response.data) {
-        console.log("inside if");
+        let movie;
+        if(props.insideMovie){
+         movie = JSON.parse(response.data.movie);
+        }
+        else  movie=response.data;
         setImage({
           hideImage: true,
-          image: response.data.image.split("/")[2],
-          video: response.data.video.split("/")[2],
-          name: response.data.name,
+          image: movie.image.split("/")[2],
+          video: movie.video.split("/")[2],
+          name: movie.name,
           render: true,
         });
       } else {

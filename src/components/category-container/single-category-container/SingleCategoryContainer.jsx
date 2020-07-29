@@ -13,8 +13,8 @@ export default function SingleCategoryContainer(props) {
         {props.movies.map((movie) => {
           let img = movie.thumbnail.split("/")[2];
           return (
-            <Link to={`/movie/${movie.id}`}>
-              <SingleCategoryElement key={movie.id} img={img}></SingleCategoryElement>
+            <Link to={`/movie/${movie.id}`} key={movie.id}>
+              <SingleCategoryElement  img={img}></SingleCategoryElement>
             </Link>
           );
         })}

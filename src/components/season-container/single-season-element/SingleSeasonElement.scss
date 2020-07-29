@@ -1,0 +1,18 @@
+.single-season-element{
+    display: flex;
+    flex-direction: column;
+    margin: 0 30px;
+    &:first-of-type{
+        margin-left: 0;
+    }
+    img{
+        width: 200px;
+        height: 200px;
+        display: inline-block;
+    }
+    .details{
+        h3,p{
+            color: white;
+        }
+    }
+}
