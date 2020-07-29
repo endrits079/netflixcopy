@@ -3,7 +3,6 @@ import './Movie.scss';
 
 import PreviewContainer from '../../components/preview-container/PreviewContainer';
 export default function Movie(props) {
-    console.log(props);
     let formData = new FormData();
     formData.append("getMovie", true);
     formData.append("id", props.match.params.id);

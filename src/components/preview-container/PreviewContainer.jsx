@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from "react";
 import "./PreviewContainer.scss";
 import axios from "axios";
-export default function PreviewContainer(props) {
+import { withRouter } from "react-router-dom";
+function PreviewContainer(props) {
   const [files, setImage] = useState({ image: "", video: "", name: "", render: false, hideImage: true });
   const [muted, setMuted] = useState(true);
   useEffect(() => {
-  
     axios.post("http://localhost/netflix/index.php", props.formData).then((response) => {
-      setImage({
-        hideImage:true,
-        image: response.data.image.split("/")[2],
-        video: response.data.video.split("/")[2],
-        name: response.data.name,
-        render: true,
-      });
+      console.log(response.data);
+      if (response.data) {
+        console.log("inside if");
+        setImage({
+          hideImage: true,
+          image: response.data.image.split("/")[2],
+          video: response.data.video.split("/")[2],
+          name: response.data.name,
+          render: true,
+        });
+      } else {
+       props.history.push('/404');
+      }
     });
-  }, []);
+  }, [props.formData]);
 
   const muteToggle = () => {
     setMuted(!muted);
@@ -55,3 +61,5 @@ export default function PreviewContainer(props) {
     </div>
   );
 }
+
+export default withRouter(PreviewContainer);
