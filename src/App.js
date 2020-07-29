@@ -5,6 +5,7 @@ import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
 import Movie from "./pages/movie/Movie";
 import NotFound from './pages/404/404';
+import Watch from "./pages/watch-movie/Watch";
 import { Switch, Route } from "react-router-dom";
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/login" exact component={Login}></Route>
         <Route path="/movie/:id" exact component={Movie}></Route>
         <Route path='/404' exact component={NotFound}></Route>
+        <Route path='/watch/:id' exact component={Watch}></Route>
       </Switch>
     </div>
   );

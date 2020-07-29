@@ -1,7 +1,7 @@
 .single-season-element{
     display: flex;
     flex-direction: column;
-    margin: 0 30px;
+    margin: 0 15px;
     &:first-of-type{
         margin-left: 0;
     }
@@ -14,5 +14,6 @@
         h3,p{
             color: white;
         }
+        padding-bottom: 20px;
     }
 }
