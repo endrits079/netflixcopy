@@ -11,6 +11,7 @@ function Watch(props) {
   const [video, setVideo] = useState({ file: "", title: "" });
   const [showBack, setShowBack] = useState(true);
   const [progressInterval, setProgressInterval] = useState(null);
+  const [startTime, setStartTime] = useState(0);
   let countRef = useRef();
   countRef.current = count;
   useEffect(() => {
@@ -39,6 +40,16 @@ function Watch(props) {
           setVideo({ file: file, title: response.data.title });
         } else {
           props.history.push("/404");
+        }
+      });
+      let formData2 = new FormData();
+      formData2.append("getProgress", true);
+      formData2.append("user", props.user_id);
+      formData2.append("video", props.match.params.id);
+      axios.post("http://localhost/netflix/index.php", formData2).then((response) => {
+        if (response.data) {
+          console.log(response);
+          setStartTime(response.data.startTime);
         }
       });
     }
@@ -86,7 +97,7 @@ function Watch(props) {
             }}
             onPause={() => {
               onPauseHandler();
-              window.clearInterval(progressInterval);
+              // window.clearInterval(progressInterval);
             }}
             onPlaying={(event) => {
               event.persist();
@@ -98,13 +109,21 @@ function Watch(props) {
                   formData.append("time", event.target.currentTime);
                   formData.append("user", props.user_id);
                   formData.append("video", props.match.params.id);
-                  axios.post("http://localhost/netflix/index.php", formData).then(response=>{
-                    console.log(response.data);
-                  });
+                  axios.post("http://localhost/netflix/index.php", formData);
                 }, 3000)
               );
             }}
-            onEnded={() => window.clearInterval(progressInterval)}
+            onEnded={() => {
+              window.clearInterval(progressInterval);
+              let formData = new FormData();
+              formData.append("finishedVideo", true);
+              formData.append("video", props.match.params.id);
+              formData.append("user", props.user_id);
+              axios.post("http://localhost/netflix/index.php", formData);
+            }}
+            onLoadedMetadata={(event) => {
+              event.target.currentTime = Math.floor(startTime);
+            }}
           >
             <source src={require(`../../assets/entities/videos/${video.file}`)} type="video/mp4" />
           </video>
