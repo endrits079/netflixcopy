@@ -8,7 +8,6 @@ export default function CategoryContainer() {
     let formData = new FormData();
     formData.append("getCategories", true);
     axios.post("http://localhost/netflix/index.php", formData).then((response) => {
-      console.log(response.data);
       setCategories(response.data);
     });
   }, []);

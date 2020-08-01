@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import Feedback from "../feedback/Feedback";
 import { login } from "../../store/actions/actions";
 import Spinner from "../spinner/Spinner";
+import { withRouter } from "react-router-dom";
 const handleChange = (inputs, setInputs) => {
   let event = window.event;
   const clonedInput = cloneDeep(inputs[event.target.name]);
@@ -59,9 +60,12 @@ function LoginForm(props) {
       },
     },
   });
+  const redirect = (url) => {
+    props.history.push(url);
+  };
   const submitHandler = (e) => {
     e.preventDefault();
-    props.login(inputs.email.configs.value, inputs.password.configs.value);
+    props.login(inputs.email.configs.value, inputs.password.configs.value, redirect, props.url);
   };
   const elements = [];
   for (let key in inputs) {
@@ -80,7 +84,7 @@ function LoginForm(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: (email, password) => dispatch(login(email, password)),
+    login: (email, password, redirect, url) => dispatch(login(email, password, redirect, url)),
   };
 };
 
@@ -88,7 +92,8 @@ const mapStateToProps = (state) => {
   return {
     showSpinner: state.login.show_spinner,
     message: state.login.message,
+    url: state.location.location,
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginForm));

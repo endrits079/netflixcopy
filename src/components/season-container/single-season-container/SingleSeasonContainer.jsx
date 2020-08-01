@@ -1,7 +1,7 @@
 import React from "react";
 import SingleSeasonElement from "../single-season-element/SingleSeasonElement";
-import { Link } from "react-router-dom";
-export default function SingleCategoryContainer(props) {
+import { Link, withRouter } from "react-router-dom";
+function SingleCategoryContainer(props) {
   return (
     <div className="single-category-container">
       <Link to={`/categories/${props.category}`}>
@@ -11,9 +11,11 @@ export default function SingleCategoryContainer(props) {
       <div className="movies">
         {props.data.map((season) => {
           let file = season.filePath.split("/")[2];
-          return <SingleSeasonElement key={season.id} file={file} {...season}></SingleSeasonElement>;
+          return <SingleSeasonElement location={props.history.location.pathname} key={season.id} file={file} {...season}></SingleSeasonElement>;
         })}
       </div>
     </div>
   );
 }
+
+export default withRouter(SingleCategoryContainer);

@@ -6,11 +6,13 @@ import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from 'react-router-dom';
 import {combineReducers,createStore,applyMiddleware} from 'redux';
 import loginReducer from './store/reducers/login';
+import locationReducer from './store/reducers/location';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import Thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
 const rootReducer = combineReducers({
-  login:loginReducer
+  login:loginReducer,
+  location:locationReducer
 })
 const store = createStore(rootReducer,composeWithDevTools(applyMiddleware(Thunk)));
 ReactDOM.render(

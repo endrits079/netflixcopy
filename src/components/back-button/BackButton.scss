@@ -1,0 +1,26 @@
+.back-button {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  color: white;
+  display: flex;
+
+  z-index: 2;
+  padding: 10px 0;
+  background-color: #0000005b;
+  button {
+    border: none;
+    background: none;
+    font-size: 2.5rem;
+    color: white;
+    font-weight: bold;
+    margin-right: 50px;
+    margin-left: 20px;
+    cursor: pointer;
+
+
+  }
+  
+}

@@ -1,5 +1,5 @@
 import React from "react";
 import "./Spinner.scss";
 export default function Spinner() {
-  return <div class="lds-hourglass"></div>;
+  return <div className="lds-hourglass"></div>;
 }
