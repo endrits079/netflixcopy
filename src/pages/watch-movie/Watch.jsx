@@ -1,18 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,createRef } from "react";
 import "./Watch.scss";
 import * as actionTypes from "../../store/actions/actionTypes";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import BackButton from "../../components/back-button/BackButton";
 import { connect } from "react-redux";
 import axios from "axios";
 function Watch(props) {
   const [count, setCount] = useState(0);
   const [interval, setInterval2] = useState(null);
-  const [video, setVideo] = useState({ file: "", title: "" });
+  const [video, setVideo] = useState(null);
   const [showBack, setShowBack] = useState(true);
   const [progressInterval, setProgressInterval] = useState(null);
   const [startTime, setStartTime] = useState(0);
+  const[nextMovie,setNextMovie] = useState(null);
+  const [showNextMovieControls,setShowNextMovieControls] = useState(false);
   let countRef = useRef();
+  let videoRef = createRef();
   countRef.current = count;
   useEffect(() => {
     return () => {
@@ -37,7 +40,19 @@ function Watch(props) {
       axios.post("http://localhost/netflix/index.php", formData).then((response) => {
         if (response.data) {
           let file = response.data.filePath.split("/")[2];
-          setVideo({ file: file, title: response.data.title });
+          let fetchedMovie= response.data;
+          fetchedMovie.file=file;
+          setVideo(fetchedMovie);
+          let nextMovieForm = new FormData();
+          nextMovieForm.append('getNextVideo',true);
+          nextMovieForm.append('title',response.data.title);
+          nextMovieForm.append('season',response.data.season);
+          nextMovieForm.append('episode',response.data.episode);
+          nextMovieForm.append('entity',response.data.entityId);
+          nextMovieForm.append('id',response.data.id);
+          axios.post('http://localhost/netflix/index.php',nextMovieForm).then(response=>{
+            setNextMovie(response.data);
+          })
         } else {
           props.history.push("/404");
         }
@@ -48,12 +63,11 @@ function Watch(props) {
       formData2.append("video", props.match.params.id);
       axios.post("http://localhost/netflix/index.php", formData2).then((response) => {
         if (response.data) {
-          console.log(response);
           setStartTime(response.data.startTime);
         }
       });
     }
-  }, []);
+  }, [props.match.params.id]);
 
   const onPauseHandler = () => {
     clearInterval(interval);
@@ -86,18 +100,28 @@ function Watch(props) {
         }, 2000);
       }}
     >
-      {video.file ? (
+      {video? (
         <>
           {showBack ? <BackButton>{video.title}</BackButton> : null}
-
-          <video
+          {showNextMovieControls? <div className="video-controls">
+             <button onClick={()=>{
+               videoRef.current.play();
+             }} title='replay'><i className="fas fa-redo"></i></button>
+             <div className="next-video">
+               <h3>Next video:</h3>
+               <h4>{nextMovie.title}</h4>
+               <h5>Season {nextMovie.season},episode {nextMovie.episode}</h5>
+               <Link to={`/watch/${nextMovie.id}`}><i className="fas fa-play"></i>Play</Link>
+             </div>
+           </div>:null}
+          
+          <video ref={videoRef}
             controls
             onPlay={() => {
               onPlayHandler();
             }}
             onPause={() => {
               onPauseHandler();
-              // window.clearInterval(progressInterval);
             }}
             onPlaying={(event) => {
               event.persist();
@@ -120,6 +144,7 @@ function Watch(props) {
               formData.append("video", props.match.params.id);
               formData.append("user", props.user_id);
               axios.post("http://localhost/netflix/index.php", formData);
+              setShowNextMovieControls(true);
             }}
             onLoadedMetadata={(event) => {
               event.target.currentTime = Math.floor(startTime);
