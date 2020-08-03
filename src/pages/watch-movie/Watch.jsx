@@ -7,28 +7,13 @@ import { connect } from "react-redux";
 import Video from "../../components/video/Video";
 import axios from "axios";
 function Watch(props) {
-  const [count, setCount] = useState(0);
-  const [interval, setInterval2] = useState(null);
-  const [video, setVideo] = useState(null);
   const [showBack, setShowBack] = useState(true);
-  const [progressInterval, setProgressInterval] = useState(null);
   const [startTime, setStartTime] = useState(0);
   const [nextMovie, setNextMovie] = useState(null);
   const [showNextMovieControls, setShowNextMovieControls] = useState(false);
-  let countRef = useRef();
+  const [video, setVideo] = useState(null);
+
   let videoRef = createRef();
-  countRef.current = count;
-  useEffect(() => {
-    return () => {
-      if (countRef.current >= 10) {
-        let formData = new FormData();
-        formData.append("updateViews", true);
-        formData.append("id", props.match.params.id);
-        axios.post("http://localhost/netflix/index.php", formData);
-      }
-      clearInterval(interval);
-    };
-  }, []);
 
   useEffect(() => {
     if (!props.username) {
@@ -117,14 +102,9 @@ function Watch(props) {
             giveRef={videoRef}
             startTime={startTime}
             id={props.match.params.id}
-            progressInterval={progressInterval}
-            setProgressInterval={setProgressInterval}
             setShowNextMovieControls={setShowNextMovieControls}
             user_id={props.user_id}
             file={video.file}
-            setCount={setCount}
-            setInterval2={setInterval2}
-            interval={interval}
           ></Video>
         </>
       ) : null}

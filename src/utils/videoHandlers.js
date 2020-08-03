@@ -1,6 +1,6 @@
 import axios from "axios";
 const onPlayingHandler = (event, props) => {
-  window.clearInterval(props.progressInterval);
+  clearInterval(props.progressInterval.current);
   props.setProgressInterval(
     setInterval(() => {
       let formData = new FormData();
@@ -22,19 +22,21 @@ const onEndedHandler = (props) => {
   props.setShowNextMovieControls(true);
 };
 const onPauseHandler = (props) => {
-  clearInterval(props.interval);
+  clearInterval(props.interval.current);
   props.setInterval2(null);
 };
 const onPlayHandler = (props) => {
-  if (props.count > 10) return;
   props.setInterval2(
     setInterval(() => {
-      props.setCount((prevCount) => {
-        return prevCount + 1;
-      });
+      props.setCount((prevCount) => prevCount + 1);
 
-      if (props.count >= 10) {
-        clearInterval(props.interval);
+      if (props.count.current >= 10) {
+        console.log(props.count);
+        let formData = new FormData();
+        formData.append("updateViews", true);
+        formData.append("id", props.id);
+        axios.post("http://localhost/netflix/index.php", formData);
+        clearInterval(props.interval.current);
         props.setInterval2(null);
       }
     }, 1000)
