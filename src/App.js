@@ -1,14 +1,10 @@
 import React from "react";
 import "./App.scss";
-
 import Watch from "./pages/watch-movie/Watch";
-import { Switch, Route, withRouter } from "react-router-dom";
-import Header from "./components/header/Header";
+import { Switch, Route} from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
-function App(props) {
-  let route = props.location.pathname;
-  route = route.split("/");
-
+function App() {
+ console.log('Inside App');
   return (
     <div className="app">
       <Switch>
@@ -19,4 +15,4 @@ function App(props) {
   );
 }
 
-export default withRouter(App);
+export default App ;

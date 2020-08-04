@@ -3,6 +3,7 @@ import './Movie.scss';
 import SeasonContainer from '../../components/season-container/SeasonContainer';
 import PreviewContainer from '../../components/preview-container/PreviewContainer';
 export default function Movie(props) {
+    console.log('Inside Movie');
     let formData = new FormData();
     formData.append("getMovie", true);
     formData.append("id", props.match.params.id);

@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useRef, createRef } from "react";
+import React, { useState, useEffect, createRef } from "react";
 import "./Watch.scss";
 import * as actionTypes from "../../store/actions/actionTypes";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter} from "react-router-dom";
 import BackButton from "../../components/back-button/BackButton";
 import { connect } from "react-redux";
 import Video from "../../components/video/Video";
 import axios from "axios";
 function Watch(props) {
+  console.log('Inside Watch');
   const [showBack, setShowBack] = useState(true);
   const [startTime, setStartTime] = useState(0);
   const [nextMovie, setNextMovie] = useState(null);
@@ -14,15 +15,19 @@ function Watch(props) {
   const [video, setVideo] = useState(null);
 
   let videoRef = createRef();
-
+  let id = props.match.params.id;
+  let user_id = props.user_id;
+  let history=props.history;
+  let username = props.username;
+  let changeUrl = props.changeUrl;
   useEffect(() => {
-    if (!props.username) {
-      props.changeUrl(props.history.location.pathname);
-      props.history.push("/login");
+    if (!username) {
+     changeUrl(history.location.pathname);
+      history.push("/login");
     } else {
       let formData = new FormData();
       formData.append("getVideo", true);
-      formData.append("id", props.match.params.id);
+      formData.append("id", id);
       axios.post("http://localhost/netflix/index.php", formData).then((response) => {
         if (response.data) {
           let file = response.data.filePath.split("/")[2];
@@ -40,20 +45,20 @@ function Watch(props) {
             setNextMovie(response.data);
           });
         } else {
-          props.history.push("/404");
+          history.push("/404");
         }
       });
       let formData2 = new FormData();
       formData2.append("getProgress", true);
-      formData2.append("user", props.user_id);
-      formData2.append("video", props.match.params.id);
+      formData2.append("user", user_id);
+      formData2.append("video",id);
       axios.post("http://localhost/netflix/index.php", formData2).then((response) => {
         if (response.data) {
           setStartTime(response.data.startTime);
         }
       });
     }
-  }, [props.match.params.id]);
+  }, [id,history,user_id,username,changeUrl]);
 
   let timeout = null;
   return (
