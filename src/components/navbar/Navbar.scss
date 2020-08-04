@@ -1,0 +1,30 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  ul {
+    display: flex;
+    list-style: none;
+
+    &.left-items {
+      li {
+        margin: 0 15px;
+      }
+    }
+
+    li {
+      a {
+        padding: 15px 25px;
+        text-decoration: none;
+        color: white;
+
+        &:active,
+        &.active,
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.288);
+        }
+      }
+    }
+  }
+}

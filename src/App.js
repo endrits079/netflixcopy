@@ -1,24 +1,22 @@
 import React from "react";
 import "./App.scss";
-import Index from "./pages/index/Index";
-import Register from "./pages/auth/Register";
-import Login from "./pages/auth/Login";
-import Movie from "./pages/movie/Movie";
-import NotFound from "./pages/404/404";
+
 import Watch from "./pages/watch-movie/Watch";
-import { Switch, Route } from "react-router-dom";
-import Test from "./Test.jsx";
-export default function App() {
+import { Switch, Route, withRouter } from "react-router-dom";
+import Header from "./components/header/Header";
+import MainLayout from "./layouts/MainLayout";
+function App(props) {
+  let route = props.location.pathname;
+  route = route.split("/");
+
   return (
     <div className="app">
       <Switch>
-        <Route path="/" exact component={Index}></Route>
-        <Route path="/register" exact component={Register}></Route>
-        <Route path="/login" exact component={Login}></Route>
-        <Route path="/movie/:id" exact component={Movie}></Route>
-        <Route path="/404" exact component={NotFound}></Route>
         <Route path="/watch/:id" exact component={Watch}></Route>
+        <Route path="/" component={MainLayout}></Route>
       </Switch>
     </div>
   );
 }
+
+export default withRouter(App);
