@@ -1,0 +1,19 @@
+.search-results {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 30px;
+  column-gap: 30px;
+  justify-items: center;
+
+  article {
+    img {
+      width: 200px;
+    }
+    color: white;
+
+    &>*{
+        margin: 10px 0;
+    }
+  }
+  
+}

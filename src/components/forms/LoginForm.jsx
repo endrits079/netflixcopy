@@ -7,17 +7,7 @@ import Feedback from "../feedback/Feedback";
 import { login } from "../../store/actions/actions";
 import Spinner from "../spinner/Spinner";
 import { withRouter } from "react-router-dom";
-const handleChange = (inputs, setInputs) => {
-  let event = window.event;
-  const clonedInput = cloneDeep(inputs[event.target.name]);
-  clonedInput.configs.value = event.target.value;
-  setInputs((prevInputs) => {
-    return {
-      ...prevInputs,
-      [event.target.name]: clonedInput,
-    };
-  });
-};
+import { handleChange } from "../../utils/inputHandlers";
 function LoginForm(props) {
   const [inputs, setInputs] = useState({
     email: {
@@ -30,7 +20,7 @@ function LoginForm(props) {
         placeholder: "email or username",
         required: true,
         onChange: () => {
-          handleChange(inputs, setInputs);
+          handleChange(inputs, setInputs, cloneDeep);
         },
       },
       label: "E-mail or Username",
@@ -45,7 +35,7 @@ function LoginForm(props) {
         placeholder: "password",
         required: true,
         onChange: () => {
-          handleChange(inputs, setInputs);
+          handleChange(inputs, setInputs, cloneDeep);
         },
       },
       label: "Password",
