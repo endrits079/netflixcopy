@@ -1,7 +1,7 @@
 import React from "react";
 import SingleSeasonElement from "../single-season-element/SingleSeasonElement";
 import { Link, withRouter } from "react-router-dom";
-function SingleCategoryContainer(props) {
+function SingleSeasonContainer(props) {
   return (
     <div className="single-category-container">
       <Link to={`/categories/${props.category}`}>
@@ -18,4 +18,4 @@ function SingleCategoryContainer(props) {
   );
 }
 
-export default withRouter(SingleCategoryContainer);
+export default withRouter(SingleSeasonContainer);

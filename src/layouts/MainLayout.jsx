@@ -4,8 +4,10 @@ import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
 import Movie from "../pages/movie/Movie";
 import NotFound from "../pages/404/404";
-import {Switch,Route} from 'react-router-dom';
-import Header from '../components/header/Header';
+import TVShows from "../pages/tv-shows/TVShows";
+import Movies from "../pages/movies/Movies";
+import { Switch, Route } from "react-router-dom";
+import Header from "../components/header/Header";
 export default function MainLayout() {
   return (
     <div>
@@ -16,7 +18,9 @@ export default function MainLayout() {
         <Route path="/register" exact component={Register}></Route>
         <Route path="/login" exact component={Login}></Route>
         <Route path="/movie/:id" exact component={Movie}></Route>
-        <Route path="/404" exact component={NotFound}></Route>
+        <Route path="/tvshows" exact component={TVShows}></Route>
+        <Route path="/movies" exact component={Movies}></Route>
+        <Route path="/" component={NotFound}></Route>
       </Switch>
     </div>
   );
