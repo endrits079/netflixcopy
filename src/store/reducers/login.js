@@ -3,6 +3,10 @@ import * as actionTypes from "../actions/actionTypes";
 const initialState = {
   username: null,
   user_type: null,
+  name: null,
+  last_name: null,
+  email: null,
+  subscribed: null,
   id: null,
   message: null,
   show_spinner: false,
@@ -14,12 +18,16 @@ const login_start = (state) => {
     show_spinner: true,
   };
 };
-const login_success = (state, { username, user_type, id }) => {
+const login_success = (state, { username, user_type, id, name, last_name, email, subscribed }) => {
   return {
     ...state,
     username,
     user_type,
+    name,
+    last_name,
+    email,
     id,
+    subscribed,
     message: null,
     show_spinner: false,
   };

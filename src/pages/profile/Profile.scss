@@ -1,0 +1,16 @@
+.profile {
+  padding-top: 100px;
+  color: white;
+  min-height: 100vh;
+  .update-profile {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin:25px 0;
+  }
+  .form {
+    width: 40%;
+  }
+}

@@ -4,17 +4,8 @@ import cloneDeep from "lodash/cloneDeep";
 import Input from "../input/Input";
 import axios from "axios";
 import Feedback from "../feedback/Feedback";
-const handleChange = (inputs, setInputs) => {
-  let event = window.event;
-  const clonedInput = cloneDeep(inputs[event.target.name]);
-  clonedInput.configs.value = event.target.value;
-  setInputs((prevInputs) => {
-    return {
-      ...prevInputs,
-      [event.target.name]: clonedInput,
-    };
-  });
-};
+import { handleChange } from "../../utils/inputHandlers";
+
 export default function RegisterForm() {
   const [showFeedback, setShowFeedback] = useState({ show: false, message: "", succeed: false });
   const [inputs, setInputs] = useState({
@@ -27,7 +18,7 @@ export default function RegisterForm() {
         id: "first_name",
         placeholder: "first name",
         onChange: () => {
-          handleChange(inputs, setInputs);
+          handleChange(inputs, setInputs, cloneDeep);
         },
       },
       label: "First Name",
@@ -41,7 +32,7 @@ export default function RegisterForm() {
         id: "last_name",
         placeholder: "last name",
         onChange: () => {
-          handleChange(inputs, setInputs);
+          handleChange(inputs, setInputs, cloneDeep);
         },
       },
       label: "Last Name",
@@ -55,7 +46,7 @@ export default function RegisterForm() {
         id: "username",
         placeholder: "username",
         onChange: () => {
-          handleChange(inputs, setInputs);
+          handleChange(inputs, setInputs, cloneDeep);
         },
       },
       label: "Username",
@@ -69,7 +60,7 @@ export default function RegisterForm() {
         id: "email",
         placeholder: "email",
         onChange: () => {
-          handleChange(inputs, setInputs);
+          handleChange(inputs, setInputs, cloneDeep);
         },
       },
       label: "E-mail",
@@ -83,7 +74,7 @@ export default function RegisterForm() {
         id: "password",
         placeholder: "password",
         onChange: () => {
-          handleChange(inputs, setInputs);
+          handleChange(inputs, setInputs, cloneDeep);
         },
       },
       label: "Password",
@@ -97,7 +88,7 @@ export default function RegisterForm() {
         id: "confirm_password",
         placeholder: "confirm password",
         onChange: () => {
-          handleChange(inputs, setInputs);
+          handleChange(inputs, setInputs, cloneDeep);
         },
       },
       label: "Confirm Password",
